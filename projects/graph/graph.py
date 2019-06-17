@@ -51,18 +51,37 @@ class Graph:
         return visited
 
     def bfs(self, starting_vertex, destination_vertex):
-        pass
+        q = Queue()
+        q.enqueue([starting_vertex])
+        visited = set()
+        while q.size() > 0:
+            path = q.dequeue()
+            current = path[len(path) - 1]
+            if current not in visited:
+                if current == destination_vertex:
+                    return path
+                visited.add(current)
+                for next_node in self.vertices[current]:
+                    path_copy = path[:]
+                    path_copy.append(next_node)
+                    q.enqueue(path_copy)
+        return False
 
     def dfs(self, starting_vertex, destination_vertex):
+        s = Stack()
+        s.push([starting_vertex])
         visited = set()
-        stack = [starting_vertex]
-        while stack:
-            current = stack.pop()
-            for next_node in self.vertices[current]:
-                if not next_node in visited:
-                    stack.append(next_node)
-            visited.add(current)
-        return visited
+        while s.size() > 0:
+            path = s.pop()
+            current = path[len(path) - 1]
+            if current not in visited:
+                if current == destination_vertex:
+                    return path
+                visited.add(current)
+                for next_node in self.vertices[current]:
+                    path_copy = path[:]
+                    path_copy.append(next_node)
+                    s.push(path_copy)
 
 
 if __name__ == '__main__':
