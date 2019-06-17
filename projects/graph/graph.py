@@ -41,29 +41,28 @@ class Graph:
                 for next_node in self.vertices[v]:
                     s.push(next_node)
 
-    def dft_recursive(self, starting_vertex):
-        """
-        Print each vertex in depth-first order
-        beginning from starting_vertex.
-        This should be done using recursion.
-        """
-        pass  # TODO
+    def dft_recursive(self, starting_vertex, visited=[]):
+        visited += [starting_vertex]
+
+        for next_node in self.vertices[starting_vertex]:
+            if next_node not in visited:
+                visited = self.dft_recursive(next_node, visited)
+
+        return visited
 
     def bfs(self, starting_vertex, destination_vertex):
-        """
-        Return a list containing the shortest path from
-        starting_vertex to destination_vertex in
-        breath-first order.
-        """
-        pass  # TODO
+        pass
 
     def dfs(self, starting_vertex, destination_vertex):
-        """
-        Return a list containing a path from
-        starting_vertex to destination_vertex in
-        depth-first order.
-        """
-        pass  # TODO
+        visited = set()
+        stack = [starting_vertex]
+        while stack:
+            current = stack.pop()
+            for next_node in self.vertices[current]:
+                if not next_node in visited:
+                    stack.append(next_node)
+            visited.add(current)
+        return visited
 
 
 if __name__ == '__main__':
@@ -117,26 +116,26 @@ if __name__ == '__main__':
         1, 2, 4, 3, 7, 6, 5
         1, 2, 4, 3, 7, 5, 6
     '''
-    graph.bft(1)
+graph.bft(1)
 
-    '''
+'''
     Valid DFT recursive paths:
         1, 2, 3, 5, 4, 6, 7
         1, 2, 3, 5, 4, 7, 6
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
-    graph.dft_recursive(1)
+graph.dft_recursive(1)
 
-    '''
+'''
     Valid BFS path:
         [1, 2, 4, 6]
     '''
-    print(graph.bfs(1, 6))
+print(graph.bfs(1, 6))
 
-    '''
+'''
     Valid DFS paths:
         [1, 2, 4, 6]
         [1, 2, 4, 7, 6]
     '''
-    print(graph.dfs(1, 6))
+print(graph.dfs(1, 6))
