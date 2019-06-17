@@ -16,20 +16,30 @@ class Graph:
     def add_edge(self, v1, v2):
         if v1 and v2 in self.vertices:
             self.vertices[v1].add(v2)
+        else:
+            raise IndexError("Vertex does not exist")
 
     def bft(self, starting_vertex):
-        """
-        Print each vertex in breadth-first order
-        beginning from starting_vertex.
-        """
-        pass  # TODO
+        q = Queue()
+        q.enqueue(starting_vertex)
+        visited = set()
+        while q.size() > 0:
+            v = q.dequeue()
+            if v not in visited:
+                visited.add(v)
+                for next_node in self.vertices[v]:
+                    q.enqueue(next_node)
 
     def dft(self, starting_vertex):
-        """
-        Print each vertex in depth-first order
-        beginning from starting_vertex.
-        """
-        pass  # TODO
+        s = Stack()
+        s.push(starting_vertex)
+        visited = set()
+        while s.size() > 0:
+            v = s.pop()
+            if v not in visited:
+                visited.add(v)
+                for next_node in self.vertices[v]:
+                    s.push(next_node)
 
     def dft_recursive(self, starting_vertex):
         """
